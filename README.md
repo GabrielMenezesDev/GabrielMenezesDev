@@ -298,8 +298,142 @@
         Projeto de desenvolvimento do Add_On em LW para demostração de relatórios com filtros, imagens e dados personalizados conforme a vontade do cliente
     </summary>  
 
-    
+    class MenuRelat : UserFormBase
+    {
+        public MenuRelat()
+        {
+        }
 
+        /// <summary>
+        /// Initialize components. Called by framework after form created.
+        /// </summary>
+        public override void OnInitializeComponent()
+        {
+            this.Button0 = ((SAPbouiCOM.Button)(this.GetItem("Item_0").Specific));
+            this.Button0.ClickAfter += new SAPbouiCOM._IButtonEvents_ClickAfterEventHandler(this.Button0_ClickAfter);
+            this.Button2 = ((SAPbouiCOM.Button)(this.GetItem("Item_2").Specific));
+            this.Button2.ClickAfter += new SAPbouiCOM._IButtonEvents_ClickAfterEventHandler(this.Button2_ClickAfter);
+            this.Button3 = ((SAPbouiCOM.Button)(this.GetItem("Item_3").Specific));
+            this.Button3.ClickAfter += new SAPbouiCOM._IButtonEvents_ClickAfterEventHandler(this.Button3_ClickAfter);
+            this.Button4 = ((SAPbouiCOM.Button)(this.GetItem("Item_4").Specific));
+            this.Button4.ClickAfter += new SAPbouiCOM._IButtonEvents_ClickAfterEventHandler(this.Button4_ClickAfter);
+            this.Button1 = ((SAPbouiCOM.Button)(this.GetItem("Item_1").Specific));
+            this.Button1.ClickAfter += new SAPbouiCOM._IButtonEvents_ClickAfterEventHandler(this.Button1_ClickAfter);
+            this.OnCustomInitialize();
+
+        }
+
+        private SAPbouiCOM.Button Button0;
+
+        private void OnCustomInitialize()
+        {
+
+        }
+
+        private SAPbouiCOM.Button Button2;
+        private SAPbouiCOM.Button Button3;
+        private SAPbouiCOM.Button Button4;
+
+        private void Button0_ClickAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
+        {
+            try
+            {
+                SAPbouiCOM.Form oForm = SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm;
+                oForm.Close();
+                EstoqueFilter activeForm = new EstoqueFilter();
+                activeForm.Show();
+
+            }
+            catch (Exception ex)
+            {
+                SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(ex.ToString(), 1, "Ok", "", "");
+            }
+
+        }
+
+        public void OnInitializeFormEvents()
+        {
+            this.LoadAfter += new LoadAfterHandler(this.Form_LoadAfter);
+
+        }
+
+        private void Button2_ClickAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
+        {
+            try
+            {
+                SAPbouiCOM.Form oForm = SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm;
+                oForm.Close();
+                RazaoFilter activeForm = new RazaoFilter();
+                activeForm.Show();
+            }
+            catch (Exception ex)
+            {
+                SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(ex.ToString(), 1, "Ok", "", "");
+            }
+        }
+
+        private void Button3_ClickAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
+        {
+            if (this.Button3.Item.Enabled == true)
+            {
+                try
+                {
+                    SAPbouiCOM.Form oForm = SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm;
+                    oForm.Close();
+                    DreFilter activeForm = new DreFilter();
+                    activeForm.Show();
+                }
+                catch (Exception ex)
+                {
+                    SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(ex.ToString(), 1, "Ok", "", "");
+                }
+            }
+        }
+
+        private SAPbouiCOM.Button Button1;
+
+        private void Button4_ClickAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
+        {
+            if (this.Button4.Item.Enabled == true)
+            {
+                try
+                {
+                    SAPbouiCOM.Form oForm = SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm;
+                    oForm.Close();
+                    BalancoFilter activeForm = new BalancoFilter();
+                    activeForm.Show();
+                }
+                catch (Exception ex)
+                {
+                    SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(ex.ToString(), 1, "Ok", "", "");
+                }
+            }
+        }
+
+        private void Button1_ClickAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
+        {
+            if (this.Button1.Item.Enabled == true)
+            {
+                try
+                {
+                    SAPbouiCOM.Form oForm = SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm;
+                    oForm.Close();
+                    SaldoFilter activeForm = new SaldoFilter();
+                    activeForm.Show();
+                }
+                catch (Exception ex)
+                {
+                    SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(ex.ToString(), 1, "Ok", "", "");
+                }
+
+            }
+
+        }
+    }
+
+  <img src="https://github.com/GabrielMenezesDev/GabrielMenezesDev/blob/main/WhatsApp%20Image%202023-01-22%20at%2019.53.15.jpeg" alt="php" width="375" height="279"/>
+  <br>
+  <img src="https://github.com/GabrielMenezesDev/GabrielMenezesDev/blob/main/WhatsApp%20Image%202023-01-22%20at%2019.54.56.jpeg" alt="php" width="375" height="279"/>
   </details>
   <details>
     <summary>
@@ -309,7 +443,83 @@
         Projeto de importação massiva de dados utilizando a service layer para melhor performance
     </summary>  
 
+    public Login Login()
+    {
+        try
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            RestClient restClient = new RestClient(Host);
+            RestRequest restRequest = new RestRequest("Login", Method.POST);
+            restRequest.RequestFormat = DataFormat.Json;
+            restRequest.AddHeader("Content-Type", "application/json");
+            restRequest.AddJsonBody(new { CompanyDB = CompanyDB, UserName = UserName, Password = Password });
+            IRestResponse restResponse = restClient.Execute(restRequest);
+            if (restResponse != null)
+            {
+                var a  = restResponse.Content;
+                return JsonConvert.DeserializeObject<Login>(restResponse.Content);
+            }
+            return null;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
 
+    public Tuple<Drafts, RetError> PostGenEntry(Drafts pL, string Session, String Companydb)
+    {
+        try
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            RestClient restClient = new RestClient(Host);
+            RestRequest restRequest = new RestRequest("Drafts", Method.POST);
+            restRequest.RequestFormat = DataFormat.Json;
+            restRequest.AddHeader("Content-Type", "application/json");
+            restRequest.AddJsonBody(JsonConvert.SerializeObject(pL));
+            CookieContainer cookiecon = new CookieContainer();
+            cookiecon.Add(new Cookie("B1SESSION", Session, "/b1s/v1/", server));
+            restClient.CookieContainer = cookiecon;
+            cookiecon.Add(new Cookie("CompanyDB", Companydb, "/b1s/v1/", server));
+            restClient.CookieContainer = cookiecon;
+            IRestResponse restResponse = restClient.Execute(restRequest);
+            if (restResponse != null)
+            {
+                Drafts draftRt = JsonConvert.DeserializeObject<Drafts>(restResponse.Content);
+                RetError errorRt = JsonConvert.DeserializeObject<RetError>(restResponse.Content);
+                return Tuple.Create(draftRt, errorRt);
+            }
+            return null;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    public Login Logout(string Session, String Companydb)
+    {
+        try
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            RestClient restClient = new RestClient(Host);
+            RestRequest restRequest = new RestRequest("Logout", Method.POST);
+            CookieContainer cookiecon = new CookieContainer();
+            cookiecon.Add(new Cookie("B1SESSION", Session, "/b1s/v1/", server));
+            restClient.CookieContainer = cookiecon;
+            cookiecon.Add(new Cookie("CompanyDB", Companydb, "/b1s/v1/", server));
+            restClient.CookieContainer = cookiecon;
+            IRestResponse restResponse = restClient.Execute(restRequest);
+            return null;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
 
   </details>
   </p>
