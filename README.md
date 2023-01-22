@@ -63,13 +63,11 @@
   <summary>
     <h3 align="left">:clipboard: Projetos:</h3>
   </summary>
-  <p align="left"> 
-    ```
-    function test() {
-      console.log("notice the blank line before this function?");
-    }
-    ``
-  </p>
+```
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
 </details>
 
 <details>
@@ -80,9 +78,3 @@
       <a href="https://linktr.ee/Gabriel_Menezes" target="blank"><img align="center" src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/linktree-logo-icon.svg" alt="contato" height="30" width="30" /></a>
     </p>   
 </details>
-
-```
-function test() {
-  console.log("notice the blank line before this function?");
-}
-``
