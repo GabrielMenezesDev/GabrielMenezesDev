@@ -255,8 +255,40 @@
         Projeto de desenvolvimento do relatório de etiquetagem da empresa de forma a gerar autómaticamente as etiquetas e seus dados
     </summary>  
 
-    
+    SELECT DISTINCT
+    T0.ProdName as Item,
+    T2.BcdCode as BarCode,
+    cast(T0.DocNum as varchar) as Lote1,
+    cast(Year(T0.StartDate) as varchar) as Lote2,
+    T0.StartDate as Fabricacao,
+    T0.DueDate as Vencimento,@
+    cast(cast(T1.SalPackUn as int) as varchar) as Conteudo1,
+    cast(T1.SalPackMsr as varchar) as Conteudo2
+    into #temp
+    from OWOR T0
+    INNER JOIN OITM T1 ON T0.ItemCode = T1.ItemCode
+    INNER JOIN OBCD T2 ON T2.ItemCode = T1.ItemCode
+    WHERE T0.DocNum = {?Lote} and T2.BcdName = 'EAN'
 
+    while @x <= {?Quantidade} begin
+    insert into #temp
+    SELECT DISTINCT
+    T0.ProdName as Item,
+    T2.BcdCode as BarCode,
+    cast(T0.DocNum as varchar) as Lote1,
+    cast(Year(T0.StartDate) as varchar) as Lote2,
+    T0.StartDate as Fabricacao,
+    T0.DueDate as Vencimento,
+    cast(cast(T1.SalPackUn as int) as varchar) as Conteudo1,
+    cast(T1.SalPackMsr as varchar) as Conteudo2
+    from OWOR T0
+    INNER JOIN OITM T1 ON T0.ItemCode = T1.ItemCode
+    INNER JOIN OBCD T2 ON T2.ItemCode = T1.ItemCode
+    WHERE T0.DocNum = {?Lote}  and T2.BcdName = 'EAN'
+    set @x = @x+1
+    end
+
+  <img src="https://github.com/GabrielMenezesDev/GabrielMenezesDev/blob/main/WhatsApp%20Image%202023-01-22%20at%2019.46.08.jpeg" alt="php" width="375" height="279"/>
   </details>
   <details>
     <summary>
